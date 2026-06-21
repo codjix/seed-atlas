@@ -1,0 +1,14 @@
+{
+  "name": "@repo/engine-wasm",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "bun ./scripts/build.sh",
+    "format": "biome format --write",
+    "check": "biome check --write",
+    "type-check": "tsc --noEmit"
+  },
+  "exports": {
+    ".": "./src/engine.ts"
+  }
+}
