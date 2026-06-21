@@ -1,0 +1,21 @@
+import type { GetBiomeAtInput } from "@repo/engine-wasm";
+import { useEffect, useState } from "react";
+import { useWasmEngine } from "../ui/wasm-engine";
+
+export function useBiomeAt(input: GetBiomeAtInput) {
+  const wasm = useWasmEngine();
+  const [state, setState] = useState<number | undefined>();
+
+  useEffect(() => {
+    try {
+      if (wasm.status === "ready") {
+        setState(wasm.engine.getBiomeAt(input));
+      }
+    } catch (err) {
+      console.error(err);
+      setState(undefined);
+    }
+  }, [wasm, input]);
+
+  return state;
+}

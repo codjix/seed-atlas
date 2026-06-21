@@ -1,4 +1,5 @@
 import { MantineProvider } from "@mantine/core";
+import { WasmEngineProvider } from "@/features/engine";
 import { TextStyleLoader } from "@/features/settings";
 import { useAppTheme } from "./theme";
 
@@ -9,10 +10,12 @@ export const Providers = ({ children }: { children?: React.ReactNode }) => {
   const theme = useAppTheme();
 
   return (
-    <MantineProvider theme={theme} defaultColorScheme="auto">
-      <meta name="theme-color" content="var(--mantine-color-body)" />
-      <TextStyleLoader />
-      {children}
-    </MantineProvider>
+    <WasmEngineProvider>
+      <MantineProvider theme={theme} defaultColorScheme="auto">
+        <meta name="theme-color" content="var(--mantine-color-body)" />
+        <TextStyleLoader />
+        {children}
+      </MantineProvider>
+    </WasmEngineProvider>
   );
 };
