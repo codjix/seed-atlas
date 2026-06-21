@@ -1,0 +1,3 @@
+[submodule "packages/engine-wasm/cubiomes"]
+	path = packages/engine-wasm/cubiomes
+	url = https://github.com/Cubitect/cubiomes.git
