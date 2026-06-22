@@ -1,4 +1,4 @@
-import { createWASMEngine, type WasmEngine } from "@repo/engine-wasm";
+import { createWasmEngine, type WasmEngine } from "@repo/engine-wasm";
 import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
 
 export type WasmEngineState =
@@ -9,29 +9,18 @@ export type WasmEngineState =
 const WasmEngineCtx = createContext<WasmEngineState | null>(null);
 
 export function useWasmEngine() {
-  const state = useContext(WasmEngineCtx);
-  if (!state) throw new Error("useWasmEngine must be used within WasmEngineProvider");
-  return state;
+  const ctx = useContext(WasmEngineCtx);
+  if (!ctx) throw new Error("useWasmEngine must be used within WasmEngineProvider");
+  return ctx;
 }
 
 export function WasmEngineProvider({ children }: { children?: ReactNode }) {
   const [state, setState] = useState<WasmEngineState>({ status: "loading" });
 
   useEffect(() => {
-    let cancelled = false;
-
-    createWASMEngine()
-      .then((engine) => (!cancelled ? setState({ status: "ready", engine }) : undefined))
-      .catch((err) => {
-        if (!cancelled) {
-          const error = err instanceof Error ? err : new Error(String(err));
-          setState({ status: "error", error });
-        }
-      });
-
-    return () => {
-      cancelled = true;
-    };
+    createWasmEngine()
+      .then((engine) => setState({ status: "ready", engine }))
+      .catch((error) => setState({ status: "error", error }));
   }, []);
 
   return <WasmEngineCtx value={state}>{children}</WasmEngineCtx>;
