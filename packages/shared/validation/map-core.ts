@@ -9,10 +9,10 @@ export const coordSchema = z.object({
 
 export type CommonSearchContext = z.infer<typeof commonSearchContextSchema>;
 export const commonSearchContextSchema = z.object({
-  seed: z.union([z.string().min(1), z.number().int(), z.bigint()]),
-  versionId: z.union([z.number().int().positive(), z.string().min(1)]),
-  dimension: z.enum(["overworld", "nether", "end"]).default("overworld"),
-  biomeHeight: z.number().int().default(63),
+  seed: z.string().min(1),
+  versionId: z.number().int().min(1).max(34),
+  dimension: z.number().int().min(-1).max(1).default(0),
+  biomeHeight: z.number().int().min(-64).max(320).default(256),
   origin: coordSchema.default({ x: 0, z: 0 }),
   isLargeBiome: z.boolean().default(false),
 });
@@ -44,7 +44,7 @@ export const finderResponseSchema = z.object({
   finderType: finderTypeSchema,
   targetId: z.number().int().nonnegative(),
   context: commonSearchContextSchema,
-  targets: z.array(targetInfoSchema),
+  targets: z.array(targetInfoSchema).default([]),
   meta: z.object({
     searchTime: z.number().nonnegative(),
     totalResults: z.number().int().nonnegative(),
@@ -60,7 +60,7 @@ export const mapRequestSchema = commonSearchContextSchema.extend({
   highlightedBiomes: z.array(z.number().int().nonnegative()).default([]),
   enabledStructures: z.array(z.number().int().nonnegative()).default([]),
   view: z.object({
-    zoom: z.number().positive(),
+    zoom: z.number().min(1).max(256),
     viewportWidth: z.number().int().positive(),
     viewportHeight: z.number().int().positive(),
     center: coordSchema,
@@ -70,8 +70,8 @@ export const mapRequestSchema = commonSearchContextSchema.extend({
 export type MapResponse = z.infer<typeof mapResponseSchema>;
 export const mapResponseSchema = z.object({
   context: commonSearchContextSchema,
-  visibleBiomes: z.array(targetInfoSchema).optional(),
-  visibleStructures: z.record(z.string().min(1), z.array(targetInfoSchema)),
+  visibleBiomes: z.array(targetInfoSchema).default([]),
+  visibleStructures: z.array(targetInfoSchema).default([]),
   meta: z.object({
     searchTime: z.number().nonnegative(),
     bounds: z.object({
