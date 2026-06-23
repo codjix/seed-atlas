@@ -12,14 +12,11 @@ RUN sh ./scripts/build.sh
 # Stage 2: Builder
 FROM oven/bun:1.3.14-alpine as builder
 
-# Setup working directory
-WORKDIR /build
-COPY package.json bun.lock* ./
-RUN bun install --frozen-lockfile
-
 # Copy source code
+WORKDIR /build
 COPY . .
 COPY --from=engine /build/packages/engine-wasm/dist /build/packages/engine-wasm/dist
+RUN bun install --frozen-lockfile
 
 # Build client
 WORKDIR /build/apps/client
