@@ -4,6 +4,7 @@ FROM emscripten/emsdk:6.0.0 as engine
 # Setup working directory
 WORKDIR /build
 COPY . .
+RUN git submodule update --init --recursive
 
 # Build engine
 WORKDIR /build/packages/engine-wasm
