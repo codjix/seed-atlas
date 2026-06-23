@@ -4,7 +4,7 @@ Last updated: June 2026 · Version **0.1.0** (alpha)
 
 ## Status
 
-SeedAtlas has a working monorepo, WASM biome engine, shared constants/schemas, 
+Voxelen has a working monorepo, WASM biome engine, shared constants/schemas, 
 and a minimal client that proves biome lookup in the browser.
 
 ## Plan (v0.1.0 → v1.0.0)
@@ -27,9 +27,9 @@ Single checklist — grouped by target release. Check items off as each version 
 
 ### v0.2.0 — Frontend shell
 
-- [ ] Rename project to `Voxelen`
-- [ ] Point GitHub Pages to the new repo
-- [ ] Update package metadata and any hard-coded URLs in README / CI / docs
+- [x] Rename project to `Voxelen`
+- [x] Point GitHub Pages to the new repo
+- [x] Update package metadata and any hard-coded URLs in README / CI / docs
 - [ ] App layout (header, nav, responsive shell)
 - [ ] Home page UI (proper landing)
 - [ ] Settings page (placeholders OK: theme, defaults, future prefs)

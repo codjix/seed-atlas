@@ -1,6 +1,6 @@
 # Cubiomes integration
 
-SeedAtlas depends on [cubiomes](https://github.com/xpple/cubiomes) for Minecraft world generation logic. It is vendored as a **Git submodule**, not copied directly into this repo.
+Voxelen depends on [cubiomes](https://github.com/xpple/cubiomes) for Minecraft world generation logic. It is vendored as a **Git submodule**, not copied directly into this repo.
 
 ## Submodule info
 
@@ -10,7 +10,7 @@ SeedAtlas depends on [cubiomes](https://github.com/xpple/cubiomes) for Minecraft
 	url = https://github.com/xpple/cubiomes.git
 ```
 
-The [xpple fork](https://github.com/xpple/cubiomes) extends the original Cubitect library with newer MC versions and additional features (e.g. loot tables). SeedAtlas tracks a specific commit of that fork via the submodule pointer in the parent repo.
+The [xpple fork](https://github.com/xpple/cubiomes) extends the original Cubitect library with newer MC versions and additional features (e.g. loot tables). Voxelen tracks a specific commit of that fork via the submodule pointer in the parent repo.
 
 ## What lives where
 
@@ -29,7 +29,7 @@ Do not land cubiomes source edits only inside the submodule checkout without pus
 Initial clone:
 
 ```bash
-git clone --recurse-submodules https://github.com/codjix/seed-atlas.git
+git clone --recurse-submodules https://github.com/voxelen/voxelen.git
 ```
 
 Existing clone:
@@ -51,7 +51,7 @@ When adding engine features that need cubiomes APIs:
 
 1. Confirm the API exists in xpple/cubiomes.
 2. If not, add it and open a PR to xpple/cubiomes.
-3. Bump the submodule in SeedAtlas.
+3. Bump the submodule in Voxelen.
 4. Add a minimal C export in `engine.c` and TS binding in `engine.ts`.
 5. Extend `@repo/shared` types if the UI needs new fields.
 

@@ -10,7 +10,7 @@ export const MANIFEST = withManifest({
   description: CONFIG.description,
   theme_color: "#ffffff",
   background_color: "#ffffff",
-  start_url: withPath(import.meta.env.VITE_BASE ?? "/"),
+  start_url: withPath("/"),
   display: "standalone",
   icons: [
     { src: withPath(icon192), sizes: "192x192", type: "image/webp" },

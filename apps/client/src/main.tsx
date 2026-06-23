@@ -10,7 +10,6 @@ const router = createRouter({
   scrollRestoration: true,
   defaultErrorComponent: ErrorOverlay,
   defaultNotFoundComponent: NotFoundOverlay,
-  basepath: import.meta.env.VITE_BASE ?? "/",
   routeTree,
 });
 

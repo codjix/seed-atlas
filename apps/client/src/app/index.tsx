@@ -1,6 +1,5 @@
 import { Stack, Text, Title } from "@mantine/core";
 import { createFileRoute } from "@tanstack/react-router";
-import { CONFIG } from "@/features/const";
 import { useBiomeAt } from "@/features/engine";
 
 const LOOKUP = {
@@ -13,13 +12,12 @@ const LOOKUP = {
 };
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: `Home | ${CONFIG.title}` }] }),
   component: () => {
     const biomeId = useBiomeAt(LOOKUP);
 
     return (
       <Stack p="xl" gap="sm">
-        <Title order={1}>SeedAtlas</Title>
+        <Title order={1}>Voxelen</Title>
         <Text c="dimmed">seed {LOOKUP.seed}</Text>
         <Text>
           Biome at ({LOOKUP.x}, {LOOKUP.y}, {LOOKUP.z}) is #{biomeId ?? "unknown"}

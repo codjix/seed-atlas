@@ -9,7 +9,6 @@ const routerOptions = {
 } as const;
 
 export default defineConfig({
-  base: process.env.VITE_BASE ?? "/",
   build: { chunkSizeWarningLimit: 1000 },
   optimizeDeps: { exclude: ["@repo/engine-wasm"] },
   plugins: [tanstackRouter(routerOptions), react()],

@@ -1,12 +1,11 @@
 {
   "name": "@repo/client",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "bunx -b vite",
     "build": "bunx -b vite build",
     "start": "vite preview",
-    "predeploy": "VITE_BASE=/seed-atlas bun run build",
     "deploy": "gh-pages -d dist --nojekyll",
     "format": "biome format --write",
     "check": "biome check --write",

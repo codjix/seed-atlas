@@ -30,13 +30,13 @@ FROM nginx:1.30.3-alpine-slim
 
 # Image info
 ARG IMAGE_VERSION=0.0.1
-LABEL org.opencontainers.image.title="Seed Atlas" \
+LABEL org.opencontainers.image.title="Voxelen" \
   org.opencontainers.image.description="Modern seed mapping tool for discovering Minecraft biomes and structures with ease." \
   org.opencontainers.image.author="Ibrahim Megahed <codjix@gmail.com>" \
-  org.opencontainers.image.source="https://github.com/codjix/seed-atlas.git" \
-  org.opencontainers.image.url="https://codjix.github.io/seed-atlas" \
+  org.opencontainers.image.source="https://github.com/voxelen/voxelen.git" \
+  org.opencontainers.image.url="https://voxelen.github.io" \
   org.opencontainers.image.version="${IMAGE_VERSION}" \
-  org.opencontainers.image.vendor="codjix" \
+  org.opencontainers.image.vendor="voxelen" \
   org.opencontainers.image.licenses="MIT" \
   bun.version="1.3.14"
 

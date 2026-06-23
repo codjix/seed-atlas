@@ -1,4 +1,4 @@
-# Seed Atlas
+# Voxelen
 
 Modern seed mapping tool for discovering Minecraft biomes and structures with ease.
 
@@ -13,7 +13,7 @@ Modern seed mapping tool for discovering Minecraft biomes and structures with ea
 
 ## Live demo
 
-[https://codjix.github.io/seed-atlas](https://codjix.github.io/seed-atlas)
+[https://voxelen.github.io](https://voxelen.github.io)
 
 ## Development
 
@@ -26,8 +26,8 @@ Modern seed mapping tool for discovering Minecraft biomes and structures with ea
 ### Installation
 
 ```bash
-git clone --recurse-submodules https://github.com/codjix/seed-atlas.git
-cd seed-atlas
+git clone --recurse-submodules https://github.com/voxelen/voxelen.git
+cd voxelen
 bun install
 ```
 

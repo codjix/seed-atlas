@@ -1,6 +1,6 @@
 services:
-  seed-atlas:
-    image: codjix/seed-atlas:latest
+  voxelen:
+    image: ghcr.io/voxelen/voxelen:latest
     ports:
       - 8080:80
     restart: unless-stopped

@@ -1,6 +1,6 @@
 # Architecture
 
-High-level view of how SeedAtlas is put together.
+High-level view of how Voxelen is put together.
 
 ## Overview
 
@@ -40,7 +40,7 @@ flowchart LR
   shared --> UI
 ```
 
-SeedAtlas runs **entirely in the browser**. The WASM module embeds cubiomes; there is no backend seed service.
+Voxelen runs **entirely in the browser**. The WASM module embeds cubiomes; there is no backend seed service.
 
 ## Monorepo layout
 
