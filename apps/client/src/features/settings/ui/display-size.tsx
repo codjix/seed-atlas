@@ -7,10 +7,9 @@ export const DisplaySize = () => {
   return (
     <Select
       variant="filled"
-      allowDeselect={false}
-      checkIconPosition="right"
       onChange={(value) => setValue(Number(value))}
-      value={String(value)}
+      comboboxProps={{ width: 200, position: "bottom-start" }}
+      value={value.toString()}
       data={[
         { value: "0.7", label: "Very small" },
         { value: "0.85", label: "Small" },

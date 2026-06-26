@@ -18,15 +18,15 @@ export const TextStyle = () => {
   return (
     <Select
       variant="filled"
-      allowDeselect={false}
       onChange={(value) => setValue(value || "Roboto")}
+      comboboxProps={{ width: 200, position: "bottom-start" }}
       value={value}
       data={[
         { value: "Roboto", label: "Roboto - Normal" },
         { value: "Comic Neue", label: "Comic Neue - Thin" },
-        { value: "Kalam", label: "Kalam - Cursive" },
-        { value: "Sansita", label: "Sansita - Anime" },
         { value: "Fira Code", label: "Fira Code - Mono" },
+        { value: "Sansita", label: "Sansita - Anime" },
+        { value: "Kalam", label: "Kalam - Cursive" },
       ]}
     />
   );
