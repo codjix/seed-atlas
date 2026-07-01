@@ -1,6 +1,6 @@
 import { AppShell, Divider, ScrollArea, SegmentedControl } from "@mantine/core";
-import { useState } from "react";
-import { MapControls } from "@/features/map-manager";
+import { Activity, useState } from "react";
+import { BiomeSearch, MapControls, StructureSearch } from "@/features/map-manager";
 import { Header } from "../header";
 
 export const NavBar = () => {
@@ -27,8 +27,16 @@ export const NavBar = () => {
           mt={10}
         />
       </AppShell.Section>
-      <AppShell.Section component={ScrollArea} px={20} grow>
-        {value === "map" && <MapControls />}
+      <AppShell.Section component={ScrollArea} px={20} flex={1} grow>
+        <Activity mode={value === "map" ? "visible" : "hidden"}>
+          <MapControls />
+        </Activity>
+        <Activity mode={value === "biomes" ? "visible" : "hidden"}>
+          <BiomeSearch />
+        </Activity>
+        <Activity mode={value === "structures" ? "visible" : "hidden"}>
+          <StructureSearch />
+        </Activity>
         <br />
       </AppShell.Section>
     </AppShell.Navbar>
