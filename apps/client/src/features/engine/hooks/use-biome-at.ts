@@ -1,21 +1,20 @@
-import type { CommonContext } from "@repo/shared/validation";
-import { useEffect, useState } from "react";
+import { type CommonContext, commonContextSchema } from "@repo/shared/validation";
+import { useQuery } from "@tanstack/react-query";
 import { useEngine } from "../ui/engine-provider";
 
-export function useBiomeAt(input: CommonContext) {
+export function useBiomeAt(payload: CommonContext) {
   const engine = useEngine();
-  const [state, setState] = useState<number | undefined>();
 
-  useEffect(() => {
-    try {
+  return useQuery({
+    queryKey: ["biome-at", payload],
+    enabled: engine.status !== "loading",
+    queryFn: async () => {
+      if (engine.status === "error") throw new Error(engine.error.message);
       if (engine.status === "ready") {
-        engine.engine.getBiomeAt(input).then(setState);
+        const { success, data, error } = commonContextSchema.safeParse(payload);
+        if (!success) throw new Error(error.message);
+        return await engine.engine.getBiomeAt(data);
       }
-    } catch (err) {
-      console.error(err);
-      setState(undefined);
-    }
-  }, [engine, input]);
-
-  return state;
+    },
+  });
 }
