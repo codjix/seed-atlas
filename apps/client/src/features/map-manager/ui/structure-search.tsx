@@ -1,17 +1,23 @@
 import {
+  ActionIcon,
   Alert,
+  Badge,
   Button,
   Card,
+  CopyButton,
   Divider,
   Group,
   NumberInput,
-  Pagination,
+  Popover,
   Select,
   Stack,
+  Table,
   Text,
   ThemeIcon,
 } from "@mantine/core";
+import { STRUCTURES } from "@repo/shared/constants";
 import { Iconify } from "@/components/iconify";
+import { Paginator } from "@/components/paginator";
 import { useSearchTargets } from "@/features/engine";
 import { formatTime } from "@/utils/format-time";
 import { useStructureSearch } from "../hooks";
@@ -20,7 +26,7 @@ export const StructureSearch = () => {
   const state = useStructureSearch();
   const { data, mutate, error, isPending } = useSearchTargets(state.values);
 
-  const total = Math.ceil((data?.meta.total ?? 1) / state.limit);
+  const totalPages = data ? Math.ceil(data.meta.total / data.meta.limit) : 0;
 
   return (
     <Stack mt={10} gap="sm">
@@ -76,22 +82,71 @@ export const StructureSearch = () => {
           </Group>
           {data.results.map((result) => (
             <Stack component={Card} key={`${result.coord.x}-${result.coord.z}`}>
-              <pre>{JSON.stringify(result, null, 2)}</pre>
+              <Group justify="space-between">
+                <Text fw="bold">{STRUCTURES.find((s) => s.id === result.targetId)?.label}</Text>
+                <ActionIcon.Group>
+                  <CopyButton value={`/tp @s ${result.coord.x} ~ ${result.coord.z}`}>
+                    {({ copied, copy }) => (
+                      <ActionIcon
+                        variant={copied ? "light" : "default"}
+                        title="Copy teleport command"
+                        onClick={copy}
+                      >
+                        <Iconify icon={copied ? "solar:check-square-bold" : "solar:copy-bold"} />
+                      </ActionIcon>
+                    )}
+                  </CopyButton>
+                  {/* view.x, view.z and controls.dimention */}
+                  <ActionIcon title="Locate on map">
+                    <Iconify icon="solar:gps-bold" />
+                  </ActionIcon>
+                </ActionIcon.Group>
+              </Group>
+              <Group align="flex-start">
+                <ThemeIcon variant="light" size="xl">
+                  <Iconify icon="solar:buildings-2-bold" />
+                </ThemeIcon>
+                <Stack gap="xs">
+                  <Text>Distance: {result.distance} blocks</Text>
+                  <Group gap="xs">
+                    <Badge variant="outline" size="lg" radius="sm">
+                      X: {result.coord.x}
+                    </Badge>
+                    <Badge variant="outline" size="lg" radius="sm">
+                      Z: {result.coord.z}
+                    </Badge>
+                    <Popover position="top-end" arrowPosition="center" withArrow>
+                      <Popover.Target>
+                        <Button variant="outline" h={26} radius="sm">
+                          ...
+                        </Button>
+                      </Popover.Target>
+                      <Popover.Dropdown p={5}>
+                        <Table>
+                          <Table.Tbody>
+                            {result.attributes.map((attribute) => (
+                              <Table.Tr key={attribute.key}>
+                                <Table.Td>{attribute.key.replaceAll("_", " ")}</Table.Td>
+                                <Table.Td>{attribute.value.replaceAll("_", " ")}</Table.Td>
+                              </Table.Tr>
+                            ))}
+                          </Table.Tbody>
+                        </Table>
+                      </Popover.Dropdown>
+                    </Popover>
+                  </Group>
+                </Stack>
+              </Group>
             </Stack>
           ))}
-          <center>
-            <Pagination
-              w="fit-content"
-              hidden={total <= 1}
-              total={total}
-              value={state.page}
-              siblings={0}
-              onChange={(page) => {
-                state.setPage(page);
-                mutate();
-              }}
-            />
-          </center>
+          <Paginator
+            total={totalPages}
+            value={state.page}
+            onChange={(page) => {
+              state.setPage(page);
+              mutate();
+            }}
+          />
         </>
       )}
     </Stack>

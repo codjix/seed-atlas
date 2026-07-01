@@ -13,6 +13,6 @@ export const SEARCH = {
   biomeId: 37,
   structureId: 17,
   radius: 2048,
-  limit: 20,
+  limit: 10,
   page: 1,
 };

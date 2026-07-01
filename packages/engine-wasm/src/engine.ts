@@ -223,6 +223,8 @@ export async function createWasmEngine() {
         meta: {
           total,
           searchTime: performance.now() - start,
+          limit: req.limit,
+          page: req.page,
         },
       };
     },

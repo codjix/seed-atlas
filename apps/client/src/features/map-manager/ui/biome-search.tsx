@@ -1,17 +1,21 @@
 import {
+  ActionIcon,
   Alert,
+  Badge,
   Button,
   Card,
+  CopyButton,
   Divider,
   Group,
   NumberInput,
-  Pagination,
   Select,
   Stack,
   Text,
   ThemeIcon,
 } from "@mantine/core";
+import { BIOMES } from "@repo/shared/constants";
 import { Iconify } from "@/components/iconify";
+import { Paginator } from "@/components/paginator";
 import { useSearchTargets } from "@/features/engine";
 import { formatTime } from "@/utils/format-time";
 import { useBiomeSearch } from "../hooks";
@@ -20,7 +24,7 @@ export const BiomeSearch = () => {
   const state = useBiomeSearch();
   const { data, mutate, error, isPending } = useSearchTargets(state.values);
 
-  const total = Math.ceil((data?.meta.total ?? 1) / state.limit);
+  const totalPages = data ? Math.ceil(data.meta.total / data.meta.limit) : 0;
 
   return (
     <Stack mt={10} gap="sm">
@@ -76,22 +80,52 @@ export const BiomeSearch = () => {
           </Group>
           {data.results.map((result) => (
             <Stack component={Card} key={`${result.coord.x}-${result.coord.z}`}>
-              <pre>{JSON.stringify(result, null, 2)}</pre>
+              <Group justify="space-between">
+                <Text fw="bold">{BIOMES.find((b) => b.id === result.targetId)?.label}</Text>
+                <ActionIcon.Group>
+                  <CopyButton value={`/tp @s ${result.coord.x} ~ ${result.coord.z}`}>
+                    {({ copied, copy }) => (
+                      <ActionIcon
+                        variant={copied ? "light" : "default"}
+                        title="Copy teleport command"
+                        onClick={copy}
+                      >
+                        <Iconify icon={copied ? "solar:check-square-bold" : "solar:copy-bold"} />
+                      </ActionIcon>
+                    )}
+                  </CopyButton>
+                  {/* view.x, view.z and controls.dimention */}
+                  <ActionIcon title="Locate on map">
+                    <Iconify icon="solar:gps-bold" />
+                  </ActionIcon>
+                </ActionIcon.Group>
+              </Group>
+              <Group align="flex-start">
+                <ThemeIcon variant="light" size="xl">
+                  <Iconify icon="solar:streets-map-point-bold" />
+                </ThemeIcon>
+                <Stack gap="xs">
+                  <Text>Distance: {result.distance} blocks</Text>
+                  <Group gap="xs">
+                    <Badge variant="outline" size="lg" radius="sm">
+                      X: {result.coord.x}
+                    </Badge>
+                    <Badge variant="outline" size="lg" radius="sm">
+                      Z: {result.coord.z}
+                    </Badge>
+                  </Group>
+                </Stack>
+              </Group>
             </Stack>
           ))}
-          <center>
-            <Pagination
-              w="fit-content"
-              hidden={total <= 1}
-              total={total}
-              value={state.page}
-              siblings={0}
-              onChange={(page) => {
-                state.setPage(page);
-                mutate();
-              }}
-            />
-          </center>
+          <Paginator
+            total={totalPages}
+            value={state.page}
+            onChange={(page) => {
+              state.setPage(page);
+              mutate();
+            }}
+          />
         </>
       )}
     </Stack>

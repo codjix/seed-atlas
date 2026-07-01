@@ -44,6 +44,8 @@ export const searchResponseSchema = z.object({
   meta: z.object({
     searchTime: z.number().nonnegative(),
     total: z.number().int().nonnegative(),
+    limit: z.number().int().min(1).max(100).default(20),
+    page: z.number().int().min(1).default(1),
   }),
 });
 
